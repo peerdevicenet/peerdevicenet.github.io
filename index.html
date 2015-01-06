@@ -48,6 +48,9 @@
 
 
 
+
+
+
             |&nbsp;&nbsp; <a href="dev_conn.html">Device connection</a>&nbsp;&nbsp;
 
 
@@ -58,9 +61,16 @@
 
 
 
-            |&nbsp;&nbsp; <a href="tutorials.html">Tutorials</a>
+
+
+
+            | &nbsp; <a href="java-api/index.html">Java API</a> &nbsp;
+            | &nbsp; <a href="tutorials.html">Tutorials</a>
             &nbsp;&nbsp; |&nbsp;&nbsp; <a
               href="PeerDeviceNet_design.html">Architecture</a>&nbsp;&nbsp;
+
+
+
 
             |&nbsp;&nbsp; <a href="contact.html">Contact</a> </td>
         </tr>
@@ -100,6 +110,10 @@
         for peer device connection setup.<br>
       </li>
     </ol>
+    For your convenience, Router and its api have been published to
+    Maven Central as two jar files and you can grab them thru maven or
+    gradle as described in <a href="java-api/index.html">JavaAPI doc</a>.<br>
+    <br>
     Each modules are normally supported in three levels of APIs:<br>
     <ol>
       <li>Intent api.&nbsp; <br>
@@ -107,25 +121,32 @@
     </ol>
     <div style="margin-left: 40px;">Intent API provides the highest
       level of access to Router's features. To use this API, all you
-      need is to have PeerDeviceNet (paid or free) installed on users
-      devices to gain the runtime support. Apps send normal android
-      intents using PeerDeviceNet specific action names and pack message
-      data as intent "extra" data items with PeerDeviceNet specific
-      keys. All the action names and "extra" data keys supported by
-      PeerDeviceNet have been centralized at this file <a
-        href="../Router/src/com/xconns/peerdevicenet/Router.java">Router.java</a>
-      which you can add to your project for easy access.</div>
+      need is to have PeerDeviceNet (Router) installed on users devices
+      to gain the runtime support. Apps send normal android intents
+      using PeerDeviceNet specific action names and pack message data as
+      intent "extra" data items with PeerDeviceNet specific keys. All
+      the PeerDeviceNet action names are defined at <a
+        href="java-api/com/xconns/peerdevicenet/Router.Intent.html">Router.Intent</a>
+      class and "extra" data keys at <a
+        href="java-api/com/xconns/peerdevicenet/Router.MsgKey.html">Router.MsgKey</a>
+      class which you get when you add the client jar file to your
+      project.<br>
+    </div>
     <ol start="2">
       <li>IDL api.</li>
     </ol>
     <div style="margin-left: 40px;">PeerDeviceNet's IDL APIs define
-      purely asynchronous methods and callbacks. To use these apis, you
-      need to add their aidl definition files to your project. There is
-      also DeviceInfo class and NetInfo class used at api which defines
-      information about devices and networks. For your convenience, all
-      the necessary files to use aidl api are available from <a
-        href="https://github.com/yigongliu/PeerDeviceNet_API">github
-        site</a>, which you can unzip and add to your project.<br>
+      purely asynchronous methods and callbacks. To access Router
+      services thru these apis, you can use client wrapper classes <a
+        href="java-api/com/xconns/peerdevicenet/RouterConnectionClient.html">RouterConnectionClient</a>
+      and <a
+        href="java-api/com/xconns/peerdevicenet/RouterGroupClient.html">RouterGroupClient</a>
+      which also handle some common book-keeping for you. There is also
+      <a href="java-api/com/xconns/peerdevicenet/DeviceInfo.html">DeviceInfo</a>
+      class and <a
+        href="java-api/com/xconns/peerdevicenet/NetInfo.html">NetInfo</a>
+      class used at idl api which defines information about devices and
+      networks. <br>
     </div>
     <ol start="3">
       <li>Messenger api.</li>
@@ -135,9 +156,12 @@
       "Messenger". This api defines a group of PeerDeviceNet specific
       message ids which can be used with android's Message object. Apps
       use messengers to send message data as a bundle with data items
-      using the same key names as Intent api. All the message ids and
-      bundle data keys are defined in <a
-        href="../Router/src/com/xconns/peerdevicenet/Router.java">Router.java</a>.<br>
+      using the same key names as Intent api. All the PeerDeviceNet
+      message ids are defined at <a
+        href="java-api/com/xconns/peerdevicenet/Router.MsgId.html">Router.MsgId</a>
+      class and bundle data keys are defined in <a
+        href="java-api/com/xconns/peerdevicenet/Router.MsgKey.html">Router.MsgKey</a>
+      class.<br>
     </div>
   </body>
 </html>
