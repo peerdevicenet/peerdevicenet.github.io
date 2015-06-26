@@ -6,15 +6,15 @@
   </head>
   <body>
     <div style="text-align: center;">
-      <table bgcolor="#ccccff" border="0" cellpadding="2"
-        cellspacing="2" width="100%">
+      <table width="100%" bgcolor="#ccccff" border="0" cellpadding="2"
+        cellspacing="2">
         <tbody>
           <tr>
-            <td align="right" valign="middle" width="45%"><img style="
+            <td valign="middle" width="45%" align="right"><img style="
                 width: 72px; height: 72px;" alt="PeerDeviceNet"
                 src="router72.png"><br>
             </td>
-            <td align="left" valign="middle">
+            <td valign="middle" align="left">
               <h2>PeerDeviceNet Router<br>
               </h2>
             </td>
@@ -51,7 +51,9 @@
 
 
 
+
             |&nbsp;&nbsp; <a href="dev_conn.html">Device connection</a>&nbsp;&nbsp;
+
 
 
 
@@ -72,10 +74,50 @@
 
 
 
+
             |&nbsp;&nbsp; <a href="contact.html">Contact</a> </td>
         </tr>
       </tbody>
     </table>
+    <br>
+    PeerDeviceNet provides android runtime/api-library to set up secure
+    ad-hoc peer-peer connections among a group of devices and enabling
+    communication among them. Its typical use cases cover mobile, P2P,
+    M2M, IoT applications. <br>
+    <br>
+    Its API and protocol is very light weight, and covers peer
+    discovery, presence, membership and messaging, similar to MQTT. One
+    major difference from MQTT is that MQTT is client-server model; all
+    devices connect to server to enable communication among each other.
+    PeerDeviceNet enables direct device-device (or peer-peer)
+    connections, logically without server in between.<br>
+    <br>
+    Its API and protocol include the following primitives: <br>
+    <ul>
+      <li>network detection: when device is attached to networks or
+        detached from networks. Currently it supports wifi, wifi-direct
+        and mobile hotspot. because its plugin style implementation, it
+        is easy to add bluetooth or other transport. </li>
+      <li>peer device discovery: it is designed to enable new ways of
+        peer discovery, for example, use new sensors in mobile devices.
+        On top of it we built apps using multicast, scanning QR code,
+        NFC tapping for peer discovery and connection. </li>
+      <li>peer device connection, detection of connecting peers and
+        disconnection. </li>
+      <li>membership: join/leave app specific communication groups and
+        detect peers’s join/leave. </li>
+      <li>send/receive messages thru groups.</li>
+    </ul>
+    The runtime (Router) runs as an android service in a background
+    process, while apps invoke its APIs thru AIDL, intents or messenger
+    messages.<br>
+    <br>
+    The runtime (Router) and api library have been published as two
+    jar/aar packages at MavenCentral
+    (http://search.maven.org/#search|ga|1|peerdevicenet). and you can
+    grab them thru maven or gradle as described in <a
+href="file:///home/jl/Workspaces/Workspace/xconns/pdn20150608/peerdevicenet.github.io/java-api/index.html">JavaAPI
+      doc</a>.<br>
     <br>
     As developers, we find mobile platforms (Android, iOS, Win8) are
     different from traditional platforms (desktops, servers). <br>
@@ -96,24 +138,21 @@
     interfaces allow apps fine grained control of messaging and
     connection.<br>
     <br>
-    PeerDeviceNet Router api exposes the following three functional
-    modules to support connected mobile apps:<br>
+    PeerDeviceNet api exposes the following three functional modules to
+    support connected mobile/P2P apps:<br>
     <ol>
       <li><a href="rmt_intent.html">Remote intenting</a>. intents and
         api to enable remote start of activities and services at peer
         devices, send remote broadcasts.<br>
       </li>
       <li><a href="grp_comm.html">Group communication</a>. intents and
-        api to do messaging in simple multicast groups.<br>
+        api for group membership and message passing.<br>
       </li>
       <li><a href="dev_conn.html">Device connection</a>. intents and api
-        for peer device connection setup.<br>
+        for network detection, peer device discovery, peer device
+        connection setup.<br>
       </li>
     </ol>
-    For your convenience, Router and its api have been published to
-    Maven Central as two jar files and you can grab them thru maven or
-    gradle as described in <a href="java-api/index.html">JavaAPI doc</a>.<br>
-    <br>
     Each modules are normally supported in three levels of APIs:<br>
     <ol>
       <li>Intent api.&nbsp; <br>
