@@ -4,18 +4,18 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>PeerDeviceNet - Group communication</title>
   </head>
-  <body style="color: rgb(0, 0, 0);" link="#0000EE" alink="#EE0000"
-    vlink="#551A8B">
+  <body style="color: rgb(0, 0, 0);" link="#0000EE" vlink="#551A8B"
+    alink="#EE0000">
     <div style="text-align: center;">
-      <table bgcolor="#ccccff" border="0" cellpadding="2"
-        cellspacing="2" width="100%">
+      <table width="100%" bgcolor="#ccccff" border="0" cellpadding="2"
+        cellspacing="2">
         <tbody>
           <tr>
-            <td align="right" valign="middle" width="45%"><img style="
+            <td valign="middle" width="45%" align="right"><img style="
                 width: 72px; height: 72px;" alt="PeerDeviceNet"
                 src="router72.png"><br>
             </td>
-            <td align="left" valign="middle">
+            <td valign="middle" align="left">
               <h2>Router API: Group communication<br>
               </h2>
             </td>
@@ -33,7 +33,9 @@
 
 
 
+
             |&nbsp;&nbsp; <a href="rmt_intent.html">Remote intenting</a>&nbsp;&nbsp;
+
 
 
 
@@ -65,13 +67,14 @@
             |&nbsp;&nbsp; <a href="PeerDeviceNet_design.html">Architecture</a>&nbsp;&nbsp;
 
 
+
             |&nbsp;&nbsp; <a href="contact.html">Contact</a></td>
         </tr>
       </tbody>
     </table>
     <br>
     The original goal of PeerDeviceNet is to enable communication among
-    a group of mobile devices. The natural choice will be multicast
+    a group of mobile/P2P devices. A natural choice could be multicast
     groups, such as <a
 href="http://docs.oracle.com/javase/1.4.2/docs/api/java/net/MulticastSocket.html">Java's
 
@@ -97,7 +100,8 @@ href="http://docs.oracle.com/javase/1.4.2/docs/api/java/net/MulticastSocket.html
 
 
 
-      multicast API</a>. However for mobile apps targeted by
+
+      multicast API</a>. However for mobile/P2P apps targeted by
     PeerDeviceNet, it is not ideal solution for a number of reasons
     including unreliable data transfers, and mostly important power
     consumption. The recommended practice for multicast at mobile
@@ -107,15 +111,23 @@ href="http://docs.oracle.com/javase/1.4.2/docs/api/java/net/MulticastSocket.html
     So PeerDeviceNet builds simple multicast groups on top of TCP
     connections.<br>
     <ul>
-      <li>Group is identified by a string of any content instead of by a
-        class D address and UDP port.</li>
-      <li>TCP connections among peer devices can be setup interactively
-        thru PeerDeviceNet's connection manager or programatically thru
-        connection api for complete control.<br>
+      <li>A communication group is identified by a string of any content
+        instead of by a class D address and UDP port.</li>
+      <li>Groups are formed on top of TCP connections among peer
+        devices. These TCP connections be setup thru <a
+          href="dev_conn.html">ConnectionService api</a>
+        programmatically, or interactively thru some shared
+        ConnectionManager/Connectors which may implement specific
+        security and verification strategies.</li>
+      <li>While ConnectionService is responsible for setting up
+        "physical" TCP connections among devices, GroupService is for
+        creating the logical communication structure of apps; an app can
+        participate in multiple communication groups.<br>
       </li>
     </ul>
-    The simple API follows the intuitive Java MulticastSocket api and
-    can summarized as the following four operations:<br>
+    The simple group communication API follows the intuitive Java
+    MulticastSocket api and can summarized as the following four
+    operations:<br>
     <ul>
       <li style="background-color: rgb(204, 204, 255);">joinGroup(grouId)</li>
       <li style="background-color: rgb(204, 204, 255);">leaveGroup(groupId)</li>
@@ -129,6 +141,7 @@ href="http://docs.oracle.com/javase/1.4.2/docs/api/java/net/MulticastSocket.html
       AndroidManifest.xml:</p>
     <p style="background-color: rgb(204, 204, 255);">&lt;uses-permission
       android:name="com.xconns.peerdevicenet.permission.REMOTE_MESSAGING"
+
 
 
 
@@ -167,6 +180,15 @@ href="http://docs.oracle.com/javase/1.4.2/docs/api/java/net/MulticastSocket.html
       message bundle:<br>
       "PEER_NAME", "PEER_ADDR", "PEER_PORT".<br>
     </div>
+    <p>Group communication is implemented as an android service running
+      in a background process, which will cover the following features:<br>
+    </p>
+    <ul>
+      <li>group membership management: join/leave app specific
+        communication groups and detect peers’s join/leave. </li>
+      <li>broadcast messages to all devices in groups, or send to a
+        specific device; receive messages from groups.</li>
+    </ul>
     <p>PeerDeviceNet provides three kinds of asynchronous API to support
       group communications:<br>
     </p>
@@ -204,6 +226,7 @@ href="http://docs.oracle.com/javase/1.4.2/docs/api/java/net/MulticastSocket.html
       </ul>
       Please check this <a
 href="https://github.com/yigongliu/PeerDeviceNet_Chat/blob/master/src/com/xconns/samples/chat/ChatByIntentingActivity.java">Chat
+
 
 
 
@@ -293,8 +316,17 @@ href="https://github.com/yigongliu/PeerDeviceNet_API/tree/master/com/xconns/peer
           }</b><br>
       </div>
       <br>
+      The recommended practice of accessing GroupService aidl interface
+      is by using <a
+        href="java-api/com/xconns/peerdevicenet/RouterGroupClient.html">RouterGroupClient</a>
+      which also handle some common book-keeping for you. Please check
+      out <a href="http://github.com/peerdevicenet/sample_Rotate">github
+        sample project</a> for sample of using RouterGroupClient helper
+      class.<br>
+      <br>
       Please check this <a
 href="https://github.com/yigongliu/PeerDeviceNet_Chat/blob/master/src/com/xconns/samples/chat/ChatByAidlActivity.java">Chat
+
 
 
 
@@ -359,6 +391,7 @@ href="https://github.com/yigongliu/PeerDeviceNet_Chat/blob/master/src/com/xconns
 
 
 
+
         app</a> for using messenger api.<br>
     </p>
     <p style="margin-left: 40px;">The complete source code project for
@@ -366,6 +399,7 @@ href="https://github.com/yigongliu/PeerDeviceNet_Chat/blob/master/src/com/xconns
         href="https://github.com/yigongliu/PeerDeviceNet_Chat">here</a>.
       The built app can be installed <a
 href="https://play.google.com/store/apps/details?id=com.xconns.samples.chat">from
+
 
 
 

@@ -4,18 +4,18 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>PeerDeviceNet - Device connection</title>
   </head>
-  <body style="color: rgb(0, 0, 0);" link="#0000EE" alink="#EE0000"
-    vlink="#551A8B">
+  <body style="color: rgb(0, 0, 0);" link="#0000EE" vlink="#551A8B"
+    alink="#EE0000">
     <div style="text-align: center;">
-      <table bgcolor="#ccccff" border="0" cellpadding="2"
-        cellspacing="2" width="100%">
+      <table width="100%" bgcolor="#ccccff" border="0" cellpadding="2"
+        cellspacing="2">
         <tbody>
           <tr>
-            <td align="right" valign="middle" width="45%"><img style="
+            <td valign="middle" width="45%" align="right"><img style="
                 width: 72px; height: 72px;" alt="PeerDeviceNet"
                 src="router72.png"><br>
             </td>
-            <td align="left" valign="middle">
+            <td valign="middle" align="left">
               <h2>Router API: Device connection<br>
               </h2>
             </td>
@@ -32,7 +32,13 @@
 
 
 
+
+
+
             |&nbsp;&nbsp; <a href="rmt_intent.html">Remote intenting</a>&nbsp;&nbsp;
+
+
+
 
 
 
@@ -83,34 +89,54 @@
 
 
 
+
+
+
             |&nbsp;&nbsp; Device connection&nbsp;&nbsp; | &nbsp; <a
               href="java-api/index.html">Java API</a> &nbsp; | &nbsp; <a
               href="tutorials.html">Tutorials</a>&nbsp;&nbsp;
             |&nbsp;&nbsp; <a href="PeerDeviceNet_design.html">Architecture</a>&nbsp;&nbsp;
+
+
+
 
             |&nbsp;&nbsp; <a href="contact.html">Contact</a> </td>
         </tr>
       </tbody>
     </table>
     <br>
-    The simple way to set up connections among peer devices is to use
-    PeerDeviceNet's connection manager, so that apps can completely
-    avoid the code for connection setup, reuse the existing component
-    and secure connection features, and focus on logical "communication
-    groups" setup.<br>
-    <p>PeerDeviceNet's connection manager supports two connection
-      strategies: </p>
+    PeerDeviceNet separates device connections setup and logical
+    communication groups. Device connection logic will handle security
+    and authentication so that no devices can be connected without
+    owners/users' awareness and permission. On top of device connection
+    topology, flexible communication groups can be formed according to
+    application logic and an app can participate in multiple groups.
+    Various Connectors / ConnectionManager can be built on top of device
+    connection service api to apply different security logic. Because of
+    the separation of device connection service and group communication
+    service, apps can reuse existing Connectors or ConnectinManagers to
+    connect their devices without bothering connection security details,
+    and focus on app specific group communication structure and app
+    logic.<br>
+    <p>PeerDeviceNet's connection service api supports the following
+      features:<br>
+    </p>
     <ul>
-      <li>Search and connect peer: use multicast to allow devices to
-        discover each other automatically and connect up automatically
-        if configured so.</li>
-      <li>Manually connect peer: if multicast fails, manually connect to
-        peers by entering their ip addresses.</li>
-      <li>Parameters are exposed to control aspects of connection setup.<br>
-      </li>
+      <li>network detection: when device is attached to networks or
+        detached from networks. Currently it supports wifi, wifi-direct
+        and mobile hotspot. because its plugin style implementation, it
+        is easy to add bluetooth or other transport. </li>
+      <li>peer device discovery: it is designed to enable new ways of
+        peer discovery, for example, use new sensors in mobile devices.
+        On top of it we built apps using multicast, scanning QR code,
+        NFC tapping for peer discovery and connection. </li>
+      <li>peer device connection, detection of connecting peers and
+        disconnection. </li>
     </ul>
-    Apps can start up PeerDeviceNet's connection manager easily with the
-    code, as in Chat sample:<br>
+    By default, an Connector or ConnectionManager using connection
+    service api will support intents with action names:
+    ACTION_CONNECTOR, ACTION_CONNECTION_MANAGEMENT.&nbsp; Apps can reuse
+    existing Connectors using the following code, as in Chat sample:<br>
     <div style="background-color: rgb(255, 255, 255);">
       <div style="margin-left: 40px; background-color: rgb(204, 204,
         255);">Intent intent = new
@@ -118,9 +144,8 @@
         startActivity(intent);<br>
       </div>
       <br>
-      If Apps need to set up connection in its own style, it can
-      directly use the connection service api. Apps using connection api
-      should add the following permission to its AndroidManifest.xml:<br>
+      Apps using connection service api should add the following
+      permission to its AndroidManifest.xml:<br>
       <p style="background-color: rgb(204, 204, 255);">&lt;uses-permission
 
 
@@ -146,7 +171,13 @@
 
 
 
+
+
+
         android:name="com.xconns.peerdevicenet.permission.REMOTE_MESSAGING"
+
+
+
 
 
 
@@ -258,6 +289,9 @@
       following key names:<br>
       <ul>
         <li>"NET_TYPE","NET_NAME","NET_PASS","NET_INFO","NET_INTF_NAME","NET_ADDR","NET_INTF_MCAST":
+
+
+
 
 
 
@@ -392,7 +426,18 @@ href="https://github.com/yigongliu/PeerDeviceNet_API/tree/master/com/xconns/peer
         &nbsp;&nbsp;&nbsp;<b> oneway void onDisconnected(in DeviceInfo
           device);</b><br>
         }<br>
-      </div>
+        <br>
+        The recommended practice of accessing ConnectionService aidl api
+        is by using wrapper class <a
+          href="java-api/com/xconns/peerdevicenet/RouterConnectionClient.html">RouterConnectionClient</a>
+        which also handle some common book-keeping for you. For detailed
+        tutorial on how to use RouterConnectionClient to talk to
+        ConnectionService and set up peer device connections, please
+        check out <a
+          href="http://github.com/peerdevicenet/sample_Connector_wifi_aidl">github
+
+
+          sample project</a>.</div>
     </div>
     <ol start="3">
       <li>Messenger api</li>
