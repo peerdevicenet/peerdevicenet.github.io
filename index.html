@@ -52,7 +52,9 @@
 
 
 
+
             |&nbsp;&nbsp; <a href="dev_conn.html">Device connection</a>&nbsp;&nbsp;
+
 
 
 
@@ -70,6 +72,7 @@
             | &nbsp; <a href="tutorials.html">Tutorials</a>
             &nbsp;&nbsp; |&nbsp;&nbsp; <a
               href="PeerDeviceNet_design.html">Architecture</a>&nbsp;&nbsp;
+
 
 
 
@@ -94,10 +97,11 @@
     <br>
     Its API and protocol include the following primitives: <br>
     <ul>
-      <li>network detection: when device is attached to networks or
-        detached from networks. Currently it supports wifi, wifi-direct
-        and mobile hotspot. because its plugin style implementation, it
-        is easy to add bluetooth or other transport. </li>
+      <li>network detection, connection and disconnection: when device
+        is attached to networks or detached from networks. Currently it
+        supports wifi, wifi-direct and mobile hotspot. because its
+        plugin style implementation, it is easy to add bluetooth or
+        other transport. </li>
       <li>peer device discovery: it is designed to enable new ways of
         peer discovery, for example, use new sensors in mobile devices.
         On top of it we built apps using multicast, scanning QR code,
@@ -116,8 +120,7 @@
     jar/aar packages at MavenCentral
     (http://search.maven.org/#search|ga|1|peerdevicenet). and you can
     grab them thru maven or gradle as described in <a
-href="java-api/index.html">JavaAPI
-      doc</a>.<br>
+      href="java-api/index.html">JavaAPI doc</a>.<br>
     <br>
     As developers, we find mobile platforms (Android, iOS, Win8) are
     different from traditional platforms (desktops, servers). <br>

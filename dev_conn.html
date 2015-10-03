@@ -35,7 +35,9 @@
 
 
 
+
             |&nbsp;&nbsp; <a href="rmt_intent.html">Remote intenting</a>&nbsp;&nbsp;
+
 
 
 
@@ -92,10 +94,12 @@
 
 
 
+
             |&nbsp;&nbsp; Device connection&nbsp;&nbsp; | &nbsp; <a
               href="java-api/index.html">Java API</a> &nbsp; | &nbsp; <a
               href="tutorials.html">Tutorials</a>&nbsp;&nbsp;
             |&nbsp;&nbsp; <a href="PeerDeviceNet_design.html">Architecture</a>&nbsp;&nbsp;
+
 
 
 
@@ -122,10 +126,11 @@
       features:<br>
     </p>
     <ul>
-      <li>network detection: when device is attached to networks or
-        detached from networks. Currently it supports wifi, wifi-direct
-        and mobile hotspot. because its plugin style implementation, it
-        is easy to add bluetooth or other transport. </li>
+      <li>network detection, connection and disconnection: when device
+        is attached to networks or detached from networks. Currently it
+        supports wifi, wifi-direct and mobile hotspot. because its
+        plugin style implementation, it is easy to add bluetooth or
+        other transport. </li>
       <li>peer device discovery: it is designed to enable new ways of
         peer discovery, for example, use new sensors in mobile devices.
         On top of it we built apps using multicast, scanning QR code,
@@ -174,7 +179,9 @@
 
 
 
+
         android:name="com.xconns.peerdevicenet.permission.REMOTE_MESSAGING"
+
 
 
 
@@ -242,8 +249,12 @@
         "com.xconns.peerdevicenet.GET_NETWORKS";<br>
         ACTION_GET_ACTIVE_NETWORK =
         "com.xconns.peerdevicenet.GET_ACTIVE_NETWORK";<br>
+        ACTION_CONNECT_NETWORK =
+        "com.xconns.peerdevicenet.CONNECT_NETWORK"; <br>
+        ACTION_DISCONNECT_NETWORK =
+        "com.xconns.peerdevicenet.DISCONNECT_NETWORK"; <br>
         ACTION_ACTIVATE_NETWORK =
-        "com.xconns.peerdevicenet.ACTIVATE_NETWORK";<br>
+        "com.xconns.peerdevicenet.ACTIVATE_NETWORK"; <br>
       </div>
       <ul>
         <li>Intent actions for searching and finding peer devices:</li>
@@ -271,6 +282,10 @@
         "com.xconns.peerdevicenet.GET_ACTIVE_NETWORK";<br>
         ACTION_ACTIVATE_NETWORK =
         "com.xconns.peerdevicenet.ACTIVATE_NETWORK";<br>
+        ACTION_NETWORK_CONNECTING =
+        "com.xconns.peerdevicenet.NETWORK_CONNECTING";<br>
+        ACTION_NETWORK_CONNECTION_FAILED =
+        "com.xconns.peerdevicenet.NETWORK_CONNECTION_FAILED";<br>
         ACTION_NETWORK_CONNECTED =
         "com.xconns.peerdevicenet.NETWORK_CONNECTED";<br>
         ACTION_NETWORK_DISCONNECTED =
@@ -289,6 +304,7 @@
       following key names:<br>
       <ul>
         <li>"NET_TYPE","NET_NAME","NET_PASS","NET_INFO","NET_INTF_NAME","NET_ADDR","NET_INTF_MCAST":
+
 
 
 
@@ -347,6 +363,12 @@ href="https://github.com/yigongliu/PeerDeviceNet_API/tree/master/com/xconns/peer
         &nbsp;&nbsp;&nbsp; //choose a network for peer connections<br>
         &nbsp;&nbsp;&nbsp; <b>oneway void activateNetwork(int
           sessionId, in NetInfo net);</b><br>
+        &nbsp;&nbsp;&nbsp; //connect to specified network<br>
+        &nbsp;&nbsp;&nbsp; <b>oneway void connectNetwork(int sessionId,
+          in NetInfo net);</b><br>
+        &nbsp;&nbsp;&nbsp; //disconnect a specified network<br>
+        &nbsp;&nbsp;&nbsp; <b>oneway void disconnectNetwork(int
+          sessionId, in NetInfo net);</b><br>
         <br>
         &nbsp;&nbsp;&nbsp; // --- peer device discovery/search api ---<br>
         &nbsp;&nbsp;&nbsp; //during discovery/search, broadcast this
@@ -383,6 +405,12 @@ href="https://github.com/yigongliu/PeerDeviceNet_API/tree/master/com/xconns/peer
         &nbsp;&nbsp;&nbsp; //results of calling getNetworks()<br>
         &nbsp;&nbsp;&nbsp;<b> oneway void onGetNetworks(in NetInfo[]
           nets);</b><br>
+        &nbsp;&nbsp;&nbsp; //connecting to network has started<br>
+        &nbsp;&nbsp;&nbsp;<b> oneway void onNetworkConnecting(in NetInfo
+          net);</b><br>
+        &nbsp;&nbsp;&nbsp; //connection to network has failed<br>
+        &nbsp;&nbsp;&nbsp;<b> oneway void onNetworkConnectionFailed(in
+          NetInfo net);</b><br>
         &nbsp;&nbsp;&nbsp; //runtime detect that this device is
         connected to a new network<br>
         &nbsp;&nbsp;&nbsp;<b> oneway void onNetworkConnected(in NetInfo
@@ -437,6 +465,7 @@ href="https://github.com/yigongliu/PeerDeviceNet_API/tree/master/com/xconns/peer
           href="http://github.com/peerdevicenet/sample_Connector_wifi_aidl">github
 
 
+
           sample project</a>.</div>
     </div>
     <ol start="3">
@@ -472,6 +501,14 @@ href="https://github.com/yigongliu/PeerDeviceNet_API/tree/master/com/xconns/peer
       NETWORK_CONNECTED = 10703;<br>
       &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; public static final int
       NETWORK_DISCONNECTED = 10704;<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; public static final int
+      CONNECT_NETWORK = 10705;<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; public static final int
+      DISCONNECT_ NETWORK = 10706;<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; public static final int
+      NETWORK_CONNECTING = 10707;<br>
+      &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; public static final int
+      NETWORK_CONNECTION_FAILED = 10708;<br>
       <div style="margin-left: 40px;">public final static int
         SEARCH_FOUND_DEVICE = -10210;<br>
       </div>
